@@ -1,8 +1,10 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useRef, useState } from 'react'
+import type { WorldSnapshot } from '@openblox/shared-types'
 import { Raycaster, Vector2 } from 'three'
 import { CharacterController } from '../../gameplay/character/CharacterController'
 import { useMovementInput } from '../../gameplay/input/useMovementInput'
+import { SocketClient } from '../../networking/SocketClient'
 
 type Target = { id: number; position: [number, number, number]; color: string; alive: boolean }
 const startingTargets: Target[] = [
@@ -53,10 +55,20 @@ function Arena({ targets, onShoot, onPosition }: { targets: Target[]; onShoot: (
 }
 
 export function PlayWorld({ worldName, onExit }: { worldName: string; onExit: () => void }) {
+  const network = useRef(new SocketClient())
   const [targets, setTargets] = useState(startingTargets)
   const [score, setScore] = useState(0)
   const [ammo, setAmmo] = useState(12)
   const [position, setPosition] = useState<[number, number, number]>([0, 1, 0])
+  const [connected, setConnected] = useState(false)
+  const [players, setPlayers] = useState<WorldSnapshot['players']>([])
+  useEffect(() => {
+    const client = network.current
+    const removeReady = client.onReady(() => { setConnected(true); client.joinWorld({ worldId: 'rivals', name: 'builder_01', color: '#2672d8' }) })
+    const removeSnapshot = client.onWorldSnapshot((snapshot) => setPlayers(snapshot.players))
+    client.connect()
+    return () => { removeReady(); removeSnapshot(); client.disconnect() }
+  }, [])
   const handleShoot = (id: number) => { if (ammo <= 0) return; setAmmo((value) => value - 1); setTargets((current) => current.map((target) => target.id === id ? { ...target, alive: false } : target)); setScore((value) => value + 1) }
-  return <div className="fps-game" onContextMenu={(event) => event.preventDefault()}><Canvas camera={{ position: [0, 1.65, 5], fov: 78 }} shadows><color attach="background" args={['#91a7c2']} /><ambientLight intensity={1.2} /><directionalLight position={[-4, 10, 4]} intensity={2.4} castShadow /><Arena targets={targets} onShoot={handleShoot} onPosition={setPosition} /></Canvas><div className="fps-topbar"><span className="fps-brand">OPENBLOX <b>/</b> {worldName}</span><span className="fps-round">ROUND 01 &nbsp; | &nbsp; 1V1</span><button className="fps-exit" type="button" onClick={() => { document.exitPointerLock(); onExit() }}>LEAVE</button></div><div className="crosshair"><i /><i /><i /><i /><b>+</b></div><div className="fps-hud"><div className="health"><span>HEALTH</span><strong>100</strong><div><i /></div></div><div className="weapon"><span>RIFLE</span><strong>{String(ammo).padStart(2, '0')} <small>/ 12</small></strong><button type="button" onClick={() => setAmmo(12)}>R RELOAD</button></div></div><div className="scoreboard"><span>YOU</span><strong>{score}</strong><em>:</em><strong>0</strong><span>RIVAL</span></div><div className="fps-hint">CLICK TO AIM &nbsp; • &nbsp; WASD TO MOVE &nbsp; • &nbsp; CLICK TO FIRE &nbsp; • &nbsp; {Math.round(position[0])}, {Math.round(position[2])}</div>{targets.every((target) => !target.alive) && <div className="round-won"><strong>ROUND WON</strong><span>All rivals eliminated</span><button type="button" onClick={() => { setTargets(startingTargets); setScore(0); setAmmo(12) }}>PLAY AGAIN</button></div>}</div>
+  return <div className="fps-game" onContextMenu={(event) => event.preventDefault()}><Canvas camera={{ position: [0, 1.65, 5], fov: 78 }} shadows><color attach="background" args={['#91a7c2']} /><ambientLight intensity={1.2} /><directionalLight position={[-4, 10, 4]} intensity={2.4} castShadow /><Arena targets={targets} onShoot={handleShoot} onPosition={(nextPosition) => { setPosition(nextPosition); network.current.sendPosition(nextPosition) }} /></Canvas><div className="fps-topbar"><span className="fps-brand">OPENBLOX <b>/</b> {worldName}</span><span className="fps-round">ROUND 01 &nbsp; | &nbsp; {connected ? `${players.length} ONLINE` : 'CONNECTING'}</span><button className="fps-exit" type="button" onClick={() => { document.exitPointerLock(); onExit() }}>LEAVE</button></div><div className="crosshair"><i /><i /><i /><i /><b>+</b></div><div className="fps-hud"><div className="health"><span>HEALTH</span><strong>100</strong><div><i /></div></div><div className="weapon"><span>RIFLE</span><strong>{String(ammo).padStart(2, '0')} <small>/ 12</small></strong><button type="button" onClick={() => setAmmo(12)}>R RELOAD</button></div></div><div className="scoreboard"><span>YOU</span><strong>{score}</strong><em>:</em><strong>0</strong><span>RIVAL</span></div><div className="fps-hint">CLICK TO AIM &nbsp; • &nbsp; WASD TO MOVE &nbsp; • &nbsp; CLICK TO FIRE &nbsp; • &nbsp; {Math.round(position[0])}, {Math.round(position[2])}</div>{targets.every((target) => !target.alive) && <div className="round-won"><strong>ROUND WON</strong><span>All rivals eliminated</span><button type="button" onClick={() => { setTargets(startingTargets); setScore(0); setAmmo(12) }}>PLAY AGAIN</button></div>}</div>
 }
