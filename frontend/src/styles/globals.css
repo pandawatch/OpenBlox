@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { font-family: Arial, Helvetica, sans-serif; color: #191b1f; background: #f2f2f2; font-synthesis: none; text-rendering: optimizeLegibility; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+
+.roblox-shell { min-height: 100vh; background: #f2f2f2; }
+.roblox-topbar { display: flex; align-items: center; gap: 22px; height: 58px; padding: 0 27px; color: #191b1f; background: #fff; border-bottom: 1px solid #d8d8d8; }
+.menu-button { display: none; border: 0; background: none; font-size: 22px; }
+.roblox-logo { display: flex; align-items: center; gap: 8px; border: 0; color: #111; background: none; font-size: 20px; letter-spacing: -.06em; }
+.logo-hole { width: 22px; height: 22px; background: #111; transform: rotate(12deg); }
+.logo-hole::after { display: block; width: 8px; height: 8px; margin: 7px; content: ''; background: #fff; }
+.search-box { display: flex; align-items: center; gap: 8px; width: min(340px, 38vw); padding: 8px 12px; color: #777; background: #f2f2f2; border: 1px solid #d3d3d3; border-radius: 5px; }
+.search-box input { width: 100%; border: 0; outline: 0; background: transparent; font-size: 14px; }
+.account-nav { display: flex; align-items: center; gap: 22px; margin-left: auto; }
+.account-nav button { border: 0; color: #303236; background: none; font-size: 13px; }
+.account-nav b { color: #08a045; font-weight: 400; }
+.mini-avatar { display: grid; width: 32px; height: 32px; place-items: center; color: white !important; background: #2672d8 !important; border-radius: 50%; }
+.roblox-layout { display: flex; min-height: calc(100vh - 58px); }
+.roblox-sidebar { position: relative; display: flex; flex: 0 0 220px; flex-direction: column; gap: 3px; padding: 25px 14px; background: #fff; border-right: 1px solid #ddd; }
+.side-link { display: flex; align-items: center; gap: 15px; padding: 11px 15px; border: 0; color: #52555a; background: none; border-radius: 5px; text-align: left; font-size: 14px; }
+.side-link span { width: 18px; color: #73777c; font-size: 20px; text-align: center; }
+.side-link.active { color: #111; background: #e8e8e8; font-weight: 700; }
+.side-link i { margin-left: auto; padding: 2px 6px; color: white; background: #e74c3c; border-radius: 10px; font-size: 10px; font-style: normal; }
+.sidebar-rule { height: 1px; margin: 19px 8px 13px; background: #e1e1e1; }
+.sidebar-label { margin: 0 15px 8px; color: #898c90; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+.favorite-game { display: flex; align-items: center; gap: 10px; padding: 9px 15px; border: 0; background: none; text-align: left; font-size: 13px; }
+.rivals-mini { display: grid; width: 31px; height: 31px; place-items: center; color: white; background: #8f1a20; border-radius: 5px; font-size: 18px; font-weight: 900; }
+.sidebar-bottom { display: grid; gap: 14px; margin-top: auto; }
+.sidebar-bottom small { padding: 0 15px; color: #aaa; font-size: 10px; }
+.roblox-content { width: min(1260px, 100%); padding: 28px 43px 70px; }
+.breadcrumb { margin-bottom: 24px; color: #73777c; font-size: 13px; }
+.breadcrumb span { margin: 0 9px; color: #bbb; }
+.rivals-hero { display: grid; grid-template-columns: minmax(440px, 1.55fr) minmax(310px, .9fr); gap: 30px; padding-bottom: 35px; border-bottom: 1px solid #d8d8d8; }
+.rivals-art { position: relative; min-height: 350px; overflow: hidden; background: #251d52; border-radius: 7px; box-shadow: 0 2px 7px #bbb; }
+.art-grid { position: absolute; inset: 0; opacity: .25; background: linear-gradient(115deg, transparent 48%, #fff 49%, transparent 50%), linear-gradient(30deg, transparent 48%, #fff 49%, transparent 50%); background-size: 80px 80px; transform: scale(2); }
+.art-glow { position: absolute; width: 350px; height: 350px; border-radius: 50%; filter: blur(25px); opacity: .65; }
+.art-glow-red { top: -100px; left: -75px; background: #ee2430; }
+.art-glow-blue { right: -80px; bottom: -120px; background: #247ce5; }
+.art-player { position: absolute; bottom: -35px; width: 115px; height: 275px; background: #d8212d; clip-path: polygon(24% 0, 80% 3%, 76% 39%, 100% 56%, 85% 100%, 60% 100%, 50% 67%, 32% 100%, 5% 100%, 20% 54%); filter: drop-shadow(8px 4px 0 #52161e); }
+.art-player span { position: absolute; top: -36px; left: 16px; width: 80px; height: 80px; border-radius: 10px; background: #e62c37; }
+.art-player-left { left: 23%; transform: rotate(-12deg); }
+.art-player-right { right: 16%; background: #2076de; filter: drop-shadow(8px 4px 0 #152f65); transform: scale(.85) rotate(10deg); }
+.art-player-right span { background: #2d83e8; }
+.art-title { position: absolute; right: 0; bottom: 52px; left: 0; color: #fff; font-size: clamp(42px, 7vw, 90px); font-weight: 1000; letter-spacing: .05em; text-align: center; text-shadow: 5px 5px 0 #222; transform: skew(-8deg); }
+.art-subtitle { position: absolute; right: 0; bottom: 27px; left: 0; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .4em; text-align: center; }
+.rivals-info { padding: 5px 5px 0; }
+.game-heading-row { display: flex; gap: 17px; align-items: center; }
+.rivals-icon { display: grid; width: 70px; height: 70px; place-items: center; color: #fff; background: #8f1a20; border-radius: 11px; font-size: 43px; font-weight: 1000; box-shadow: inset 0 0 0 2px #bf3d42; }
+.game-overline { margin: 0 0 4px; color: #888; font-size: 10px; font-weight: 700; letter-spacing: .14em; }
+.rivals-info h1 { margin: 0; font-size: 32px; letter-spacing: -.04em; }
+.byline { margin: 4px 0 0; color: #73777c; font-size: 12px; }
+.byline span { color: #1684e8; }
+.game-description { margin: 29px 0 23px; color: #55585d; font-size: 14px; line-height: 1.55; }
+.roblox-play-button { width: 100%; padding: 14px; border: 0; color: #fff; background: #08a045; border-radius: 4px; box-shadow: 0 2px 0 #047432; font-size: 17px; font-weight: 700; }
+.roblox-play-button span { margin-right: 8px; font-size: 14px; }
+.game-stats { display: flex; gap: 28px; margin-top: 25px; }
+.game-stats span { display: grid; gap: 5px; }
+.game-stats strong { font-size: 16px; }
+.game-stats small { color: #888; font-size: 11px; }
+.experience-section { max-width: 850px; padding: 29px 0; border-bottom: 1px solid #d8d8d8; }
+.section-title-row { display: flex; align-items: baseline; justify-content: space-between; }
+.section-title-row h2 { margin: 0; font-size: 19px; }
+.section-title-row span { color: #888; font-size: 12px; }
+.about-copy { max-width: 720px; margin: 15px 0; color: #55585d; font-size: 14px; line-height: 1.6; }
+.tag-row { display: flex; gap: 8px; }
+.tag-row span { padding: 6px 10px; color: #666; background: #e7e7e7; border-radius: 3px; font-size: 11px; }
+.server-row { display: flex; align-items: center; gap: 13px; margin-top: 17px; padding: 13px 15px; background: #fff; border: 1px solid #ddd; border-radius: 4px; font-size: 13px; }
+.server-green { width: 8px; height: 8px; background: #08a045; border-radius: 50%; }
+.server-players { margin-left: auto; color: #888; font-size: 12px; }
+.server-join { padding: 7px 16px; border: 1px solid #08a045; color: #07833a; background: #fff; border-radius: 3px; font-size: 12px; font-weight: 700; }
+.like-row { display: flex; align-items: center; gap: 18px; padding-top: 28px; color: #888; font-size: 12px; }
+.like-button { padding: 8px 12px; border: 1px solid #d0d0d0; color: #555; background: #fff; border-radius: 4px; font-size: 13px; }
+.like-button.liked { color: #d32639; border-color: #d32639; }
+
+.fps-game { position: relative; width: 100vw; height: 100vh; overflow: hidden; background: #91a7c2; cursor: crosshair; }
+.fps-game canvas { display: block; width: 100% !important; height: 100% !important; }
+.fps-topbar { position: absolute; top: 0; right: 0; left: 0; display: flex; justify-content: space-between; padding: 20px 28px; color: white; background: linear-gradient(#111b2ccc, transparent); font-size: 13px; font-weight: 700; letter-spacing: .11em; pointer-events: none; }
+.fps-brand b { color: #ed3344; }
+.fps-round { color: #d8dfec; font-size: 11px; }
+.fps-exit { padding: 8px 13px; border: 1px solid #ffffff77; color: white; background: #111b2c88; font-size: 11px; letter-spacing: .1em; pointer-events: auto; }
+.crosshair { position: absolute; top: 50%; left: 50%; width: 28px; height: 28px; margin: -14px; color: white; text-shadow: 0 1px 3px #000; pointer-events: none; }
+.crosshair b { position: absolute; inset: 0; font-size: 23px; font-weight: 400; line-height: 25px; text-align: center; }
+.crosshair i { position: absolute; background: white; box-shadow: 0 0 2px #000; }.crosshair i:nth-child(1), .crosshair i:nth-child(2) { top: 13px; width: 7px; height: 2px; }.crosshair i:nth-child(1) { left: 0; }.crosshair i:nth-child(2) { right: 0; }.crosshair i:nth-child(3), .crosshair i:nth-child(4) { left: 13px; width: 2px; height: 7px; }.crosshair i:nth-child(3) { top: 0; }.crosshair i:nth-child(4) { bottom: 0; }
+.fps-hud { position: absolute; right: 30px; bottom: 28px; left: 30px; display: flex; align-items: end; justify-content: space-between; color: white; text-shadow: 0 1px 3px #000; pointer-events: none; }.health, .weapon { display: grid; gap: 5px; }.health span, .weapon span { font-size: 10px; letter-spacing: .12em; }.health strong, .weapon strong { font-size: 32px; }.health div { width: 200px; height: 5px; background: #ffffff55; }.health i { display: block; width: 100%; height: 100%; background: #ef3340; }.weapon { text-align: right; }.weapon small { color: #ffffff99; font-size: 16px; }.weapon button { border: 0; color: #fff; background: none; font-size: 10px; letter-spacing: .1em; pointer-events: auto; }
+.scoreboard { position: absolute; top: 79px; left: 50%; display: flex; align-items: center; gap: 15px; padding: 8px 15px; color: white; background: #111b2caa; transform: translateX(-50%); }.scoreboard span { font-size: 10px; letter-spacing: .1em; }.scoreboard strong { font-size: 25px; }.scoreboard em { color: #ffffff77; font-style: normal; }.fps-hint { position: absolute; bottom: 8px; left: 50%; color: #fff9; font-size: 10px; letter-spacing: .08em; transform: translateX(-50%); white-space: nowrap; }.round-won { position: absolute; top: 50%; left: 50%; display: grid; gap: 13px; min-width: 260px; padding: 30px; color: white; background: #111b2cee; text-align: center; transform: translate(-50%, -50%); }.round-won strong { font-size: 29px; }.round-won span { color: #aab4c5; font-size: 12px; }.round-won button { padding: 10px; border: 0; color: white; background: #08a045; font-weight: 700; }
+
+@media (max-width: 760px) { .menu-button { display: block; }.roblox-topbar { padding: 0 14px; gap: 10px; }.roblox-sidebar { display: none; }.account-nav button:not(.mini-avatar) { display: none; }.search-box { width: 100%; }.roblox-content { padding: 20px 16px 50px; }.rivals-hero { grid-template-columns: 1fr; }.rivals-art { min-height: 240px; }.game-stats { gap: 18px; }.server-players { display: none; }.like-row { align-items: flex-start; flex-direction: column; gap: 8px; }.fps-topbar { padding: 14px; }.fps-round { display: none; }.fps-hud { right: 15px; bottom: 25px; left: 15px; }.health div { width: 130px; }.fps-hint { display: none; } }
